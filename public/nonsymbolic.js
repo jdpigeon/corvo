@@ -20,10 +20,16 @@ Game.NonSymbolic = function (game) {
 		this.rnd       //  the repeatable random number generator (Phaser.RandomDataGenerator)
 		this.signal = new Phaser.Signal();
 		this.mobile = window.mobileAndTabletcheck();
+		this.rectWidth = window.innerWidth / 2.5;
+		this.rectHeight = window.innerHeight / 2;
 }
 
 Game.NonSymbolic.prototype = {
-
+		init: function() {
+			window.postMessage(window.innerWidth + " " + window.innerHeight, '*');
+			console.log(window.innerWidth + " " + window.innerHeight + window.devicePixelRatio);
+			this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+		},
 		create: function() {
 			//set up the timing
 			this.game.time.advancedTiming = true;
@@ -40,10 +46,9 @@ Game.NonSymbolic.prototype = {
 			x = this.game.world.bounds.width;
 			y = this.game.world.bounds.height;
 
-			dot_width = 700;
-
-			x_offs = (x - 700) / 4;
+			x_offs = (x - 700) / 5.5;
 			y_offs = (y - 600) / 2;
+
 			// adds graphics to prep for circle
 			this.n1 = this.game.add.sprite(x_offs, y_offs);
 			this.n2 = this.game.add.sprite(this.game.world.centerX + x_offs, y_offs);
@@ -180,10 +185,9 @@ Game.NonSymbolic.prototype = {
 					this.cross.visible = false;
 
 					//draw rectangles over the dots
+					// TODO: figure out how to scale the size of these
 					this.n1.children[0].beginFill(0x00000, 1);
 					this.n2.children[0].beginFill(0x00000, 1);
-					this.n1.children[0].drawRect(0,0,350,600);
-					this.n2.children[0].drawRect(0,0,350,600);
 				}
 
 				else if (arguments[0] == 'end_task') {
@@ -299,7 +303,7 @@ Game.NonSymbolic.prototype = {
 		// draw circle function
 		genCircle: function(graphics, k){
 			graphics.lineStyle(5, 0x222222, 1);
-			graphics.drawRect(0, 0, 350, 600);
+			graphics.drawRect(0, 0, this.rectWidth, this.rectHeight);
 			graphics.lineStyle(0, 0x000000, 1);
 			graphics.beginFill(0xF80A6, 1);
 			circles = c[k];

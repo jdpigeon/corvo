@@ -27,13 +27,9 @@ function begin_session() {
 }
 
 function begin_neurodoro_session() {
-		const uid = firebase.auth().currentUser.uid;
-		const users = firebase.database().ref('/users/' + uid + '/');
-
 		const task = 'nonsymbolic';
 		let updates = {};
 		updates['current_task'] = task;
-		promise = users.update(updates).then();
 		window.game.state.start('Boot', true,false, task);
 }
 
