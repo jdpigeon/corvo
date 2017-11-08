@@ -17,9 +17,7 @@
         <script src="circles.js"></script>
         <script src="sessions.js"></script>
         <script src="common.js"></script>
-        <script src="symbolic.js"></script>
         <script src="nonsymbolic.js"></script>
-        <script src="ordinality.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
 
     </head>
@@ -35,15 +33,12 @@ var config = {
 firebase.initializeApp(config);
 </script>
 
-
-
-
 <script>
 window.onload = function() {
   // Listening for auth state changes.
   // [START authstatelistener]
-
   firebase.auth().onAuthStateChanged(function(user) {
+    console.log('build 1.3');
     if (user) {
       //create your phaser stuff
       var game = new Phaser.Game(
@@ -57,27 +52,24 @@ window.onload = function() {
       game.state.add("symbolic", Game.Symbolic);
       game.state.add("nonsymbolic", Game.NonSymbolic);
       game.state.add("ordinality", Game.Ordinality);
-      //game.state.add('number_to_line', Game.Number_To_Line);
-
+      game.state.add("number_to_line", Game.Number_To_Line);
       window.game = game;
-
       var users = firebase
         .database()
         .ref("users/" + user.uid + "/current_task");
-
       //users.once('value').then(function(snapshot) {
       users.once("value").then(function(snapshot) {
         current_task = snapshot.val();
         //current_task = snapshot.val().current_task;
-        if (current_task != null) {
-          //	Now start the Boot state.
-          game.state.start("Boot", true, false, current_task);
-        } else {
-          begin_neurodoro_session();
-        }
+          begin_session();
+
       });
     } else {
-      window.location = "login.html";
+      firebase.auth().signInAnonymously().catch(function(error) {
+         var errorCode = error.code;
+         var errorMessage = error.message;
+         console.log(errorMessage);
+       });
     }
   });
 };

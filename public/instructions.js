@@ -13,7 +13,7 @@ Instructions = function (text, params, parent) {
     cont = 'press space to continue'
   }
 
-  ins_style = {font:'24px Arial', fill:'#FFFFFF', align:'center', backgroundColor: 'rgba(0,0,0,0.5)'};
+  ins_style = {font:'12px Arial', fill:'#FFFFFF', align:'center', backgroundColor: 'rgba(0,0,0,0.5)'};
 
   this.ins_text = parent.game.add.text(parent.game.world.centerX, 50, text[0], ins_style);
   this.ins_text.anchor.x = 0.5;
@@ -21,10 +21,10 @@ Instructions = function (text, params, parent) {
   this.ins_text.wordWrapWidth = 800;
 
   ins_style['backgroundColor'] = 'rgba(25, 25, 25, 1)';
-  ins_style['font'] = '24px Arial';
+  ins_style['font'] = '12px Arial';
 
   this.continue_button = text_button(parent.game, this, function () {this.next();},
-                  parent.game.world.centerX, parent.game.world.centerY + 200,
+                  parent.game.world.centerX, parent.game.world.centerY,
                   cont, ins_style);
 
   this.space = this.parent.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);

@@ -10,12 +10,12 @@ TrialClock = function (parent) {
 	this.count = 0;
 	this.inc = 0;
 	this.parent = parent;
+	console.log(JSON.stringify(firebase.auth().currentUser));
 
 	durations = firebase.database().ref("settings")
 					.child(parent.task).child('durations');
 
 	this.user_settings = firebase.database().ref("settings")
-						   .child(firebase.auth().currentUser.uid)
 							.child(parent.task).child('durations');
 
 	//set the durations

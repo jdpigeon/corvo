@@ -27,7 +27,7 @@ function Logger(task, parent) {
 		}
 
 		avg_diff = parseInt(avg_diff * 100);
-		var perf = parseInt((this.data['performance'] + 1) * 50); // Normalized
+		var perf = parseInt((this.data['performance'] + 1) * 50);
 
 		obj = {'difficulty' : avg_diff, 'performance' : perf};
 
